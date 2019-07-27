@@ -260,7 +260,7 @@ port_exist_check(){
     fi
 }
 acme(){
-    ~/.acme.sh/acme.sh --issue -d ${domain} --standalone -k ec-256 --force
+    ~/.acme.sh/acme.sh --issue -d ${domain} --standalone -k ec-256 --force --listen-v6
     if [[ $? -eq 0 ]];then
         echo -e "${OK} ${GreenBG} SSL 证书生成成功 ${Font}"
         sleep 2
@@ -284,7 +284,7 @@ nginx_conf_add(){
     touch ${nginx_conf_dir}/v2ray.conf
     cat>${nginx_conf_dir}/v2ray.conf<<EOF
     server {
-        listen 443 ssl;
+        listen [::]443 ssl;
         ssl on;
         ssl_certificate       /etc/v2ray/v2ray.crt;
         ssl_certificate_key   /etc/v2ray/v2ray.key;
